@@ -1,21 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AR з A-Frame</title>
-<script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A-Frame Mathematical Scene</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body style="margin: 0; overflow: hidden;">
-<a-scene embedded arjs="debugUIEnabled: false;">
-<!-- Визначення маркера -->
+    <a-scene background="color: #222" vr-mode-ui="enabled: true">
+        <!-- Assets -->
+        <a-assets>
+            <!-- Custom font for mathematical formulas -->
+            <a-mixin id="math-text" 
+                     text="font: roboto; 
+                           color: #FFD700; 
+                           align: center;
+                           width: 12"></a-mixin>
+        </a-assets>
 <a-marker preset="hiro">
-<!-- 3D-об'єкти, прив'язані до маркера -->
-<!-- Тут будуть ваші 3D-елементи -->
-</a-marker>
-<!-- Камера з обмеженням позиції -->
-<a-entity camera></a-entity>
-</a-scene>
+        <!-- Camera with controls -->
+        <a-camera position="0 2 8" 
+                  look-controls="enabled: true" 
+                  wasd-controls="enabled: true"
+                  cursor="rayOrigin: mouse">
+        </a-camera>
+
+        <!-- Lighting -->
+        <a-light type="ambient" color="#404040" intensity="0.5"></a-light>
+        <a-light type="directional" 
+                 position="2 4 5" 
+                 color="#FFF" 
+                 intensity="0.8"
+                 shadow="cast: true"></a-light>
+        <a-light type="point" 
+                 position="-2 2 2" 
+                 color="#FF6B6B" 
+                 intensity="0.6"></a-light>
+
+        <!-- Mathematical Formula Texts -->
+        <!-- Cross Product Formula -->
+        <a-text mixin="math-text"
+                value="|a × b| = |a| · |b| · sin θ"
+                 position="0 4.5 -6"
+                text="color: #FF6B6B; 
+                      align: center; 
+                      width: 14; 
+                      font: roboto"
+                geometry="primitive: plane; width: 12; height: 1"
+                material="color: #333; transparent: true; opacity: 0.9"
+                animation="property: position; 
+                          to: 0 5 -6; 
+                          dir: alternate; 
+                          dur: 3000; 
+                          loop: true">
+        </a-text>
+
+        <!-- Ground plane -->
+        <a-plane position="0 -2 -4" 
+                 rotation="-90 0 0" 
+                 width="20" 
+                 height="20" 
+                 color="#2F4F4F"
+                 material="roughness: 0.8"
+                 shadow="receive: true">
+        </a-plane>
+
+        
+
+        <!-- Cursor for interaction -->
+        <a-cursor position="0 0 -1" 
+                  geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03" 
+                  material="color: white; shader: flat">
+           </a-marker>
+        </a-cursor>
+    </a-scene>
 </body>
 </html>
